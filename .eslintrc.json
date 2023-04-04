@@ -8,5 +8,16 @@
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
   }
 }
