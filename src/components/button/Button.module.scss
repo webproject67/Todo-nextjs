@@ -1,0 +1,13 @@
+@import '@/styles/variables';
+
+.root {
+  &_color {
+    &_primary {
+      background-color: $color-filled-primary;
+
+      &:hover {
+        background-color: darken($color-filled-primary, 5%);
+      }
+    }
+  }
+}
