@@ -1,7 +1,11 @@
 import Head from 'next/head';
 import FormLogin from '@/containers/formLogin';
 import LayoutAuth from '@/components/layoutAuth';
-import route from './route';
+
+const route = {
+  text: 'Нет аккаунта?',
+  href: '/registration',
+};
 
 export default function Login() {
   return (
