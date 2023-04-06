@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from '@mui/material/Button';
 import cn from 'classnames';
 import styles from './Button.module.scss';
@@ -5,7 +6,7 @@ import styles from './Button.module.scss';
 type Props = {
   text: string;
   color?: 'primary';
-  type?: 'button' | 'submit';
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
   variant?: 'text' | 'contained' | 'outlined';
   handleClick?: () => void;
 };
@@ -22,6 +23,7 @@ function CustomizationButton({
       className={cn(styles.root, {
         [styles.root_color_primary]: color === 'primary',
       })}
+      fullWidth
       type={type}
       variant={variant}
       onClick={handleClick}
@@ -38,4 +40,4 @@ CustomizationButton.defaultProps = {
   handleClick: () => {},
 };
 
-export default CustomizationButton;
+export default React.memo(CustomizationButton);
