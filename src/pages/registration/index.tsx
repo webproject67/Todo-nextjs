@@ -1,16 +1,16 @@
 import Head from 'next/head';
-import FormLogin from '@/containers/formLogin';
+import FormRegistration from '@/containers/formRegistration';
 import LayoutAuth from '@/components/layoutAuth';
 import route from './route';
 
-export default function Login() {
+export default function Registration() {
   return (
     <>
       <Head>
-        <title>Логин</title>
+        <title>Регистрация</title>
       </Head>
       <LayoutAuth route={route}>
-        <FormLogin />
+        <FormRegistration />
       </LayoutAuth>
     </>
   );

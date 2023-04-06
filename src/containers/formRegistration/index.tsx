@@ -13,13 +13,19 @@ const validationSchema = yup.object({
     .string()
     .min(8, 'Длина пароля должна составлять не менее 8 символов')
     .required('Заполните это поле'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password')], 'Пароли не совпадают')
+    .min(8, 'Длина пароля должна составлять не менее 8 символов')
+    .required('Заполните это поле'),
 });
 
-export default function FormLogin() {
+export default function FormRegistration() {
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
+      confirmPassword: '',
     },
     validationSchema,
     onSubmit: (values) => {
@@ -51,7 +57,23 @@ export default function FormLogin() {
             helperText={formik.touched.password && formik.errors.password}
           />
         </LayoutBox>
-        <Button text="Войти" color="primary" type="submit" />
+        <LayoutBox marginBottom="small">
+          <TextField
+            id="confirmPassword"
+            label="Подтверждение пароля"
+            type="password"
+            value={formik.values.confirmPassword}
+            handleChange={formik.handleChange}
+            isError={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
+          />
+        </LayoutBox>
+        <Button text="Зарегистрироваться" color="primary" type="submit" />
       </form>
     </LayoutBox>
   );
