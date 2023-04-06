@@ -1,0 +1,9 @@
+@import '@/styles/variables';
+
+.root {
+  &_color {
+    &_primary {
+      color: $color-text-primary;
+    }
+  }
+}
