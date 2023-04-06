@@ -1,6 +1,14 @@
 @import '@/styles/variables';
 
 .root {
+  padding: 14px;
+
+  font-size: inherit;
+  font-family: inherit;
+  text-transform: none;
+
+  border-radius: 10px;
+
   &_color {
     &_primary {
       background-color: $color-filled-primary;
