@@ -1,0 +1,20 @@
+@import '@/styles/variables';
+
+.root {
+  &_position_absolute {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+
+    transform: translateY(-50%);
+  }
+
+  &_filled_light {
+    background: $color-filled-light;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  &_transform_rotate {
+    transform: rotate(180deg);
+  }
+}

@@ -1,9 +1,7 @@
 @import 'variables';
 
 #__next {
-  margin: 0 auto;
   min-width: $width-mobile;
-  max-width: $width-desktop;
 
   color: $color-text-primary;
 }

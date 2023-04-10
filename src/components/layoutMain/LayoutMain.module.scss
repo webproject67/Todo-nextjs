@@ -1,0 +1,16 @@
+@import '@/styles/variables';
+
+.root {
+  flex-grow: 1;
+  padding: 20px;
+
+  background: $color-filled-secondary;
+
+  transition: margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+
+  &_margin_left {
+    @media (max-width: 1750px) {
+      margin-left: 172px;
+    }
+  }
+}

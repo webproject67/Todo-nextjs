@@ -4,16 +4,38 @@ import styles from './LayoutBox.module.scss';
 
 type Props = {
   children: React.ReactNode;
-  width?: 'full';
+  display?: 'flex';
+  width?: 'half' | 'desktop' | 'full';
+  height?: 'full' | 'min';
   marginBottom?: 'small';
+  marginLeft?: 'auto';
+  padding?: 'small';
+  color?: 'light';
 };
 
-function LayoutBox({ children, width, marginBottom }: Props) {
+function LayoutBox({
+  children,
+  display,
+  width,
+  height,
+  marginBottom,
+  marginLeft,
+  padding,
+  color,
+}: Props) {
   return (
     <div
       className={cn(styles.root, {
+        [styles.root_display_flex]: display === 'flex',
+        [styles.root_width_half]: width === 'half',
+        [styles.root_width_desktop]: width === 'desktop',
         [styles.root_width_full]: width === 'full',
+        [styles.root_height_full]: height === 'full',
+        [styles.root_height_min]: height === 'min',
         [styles.root_marginBottom_small]: marginBottom === 'small',
+        [styles.root_marginLeft_auto]: marginLeft === 'auto',
+        [styles.root_padding_small]: padding === 'small',
+        [styles.root_color_light]: color === 'light',
       })}
     >
       {children}
@@ -22,8 +44,13 @@ function LayoutBox({ children, width, marginBottom }: Props) {
 }
 
 LayoutBox.defaultProps = {
+  display: '',
   width: '',
+  height: '',
   marginBottom: '',
+  marginLeft: '',
+  padding: '',
+  color: '',
 };
 
 export default React.memo(LayoutBox);

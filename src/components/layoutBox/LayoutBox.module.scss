@@ -1,9 +1,60 @@
+@import '@/styles/variables';
+
 .root {
-  &_width_full {
-    width: 100%;
+  border-radius: 10px;
+
+  &_display_flex {
+    @media (min-width: $width-tablet) {
+      display: flex;
+    }
+  }
+
+  &_width {
+    &_half {
+      @media (min-width: $width-tablet) {
+        width: 50%;
+        margin: 0 20px;
+      }
+    }
+
+    &_desktop {
+      margin: 0 auto;
+      max-width: $width-desktop;
+    }
+
+    &_full {
+      width: 100%;
+    }
+  }
+
+  &_height {
+    &_full {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    &_min {
+      min-height: 91px;
+    }
   }
 
   &_marginBottom_small {
     margin-bottom: 20px;
+  }
+
+  &_marginLeft_auto {
+    @media (min-width: $width-tablet) {
+      width: 200px;
+      margin-left: auto;
+    }
+  }
+
+  &_padding_small {
+    padding: 20px;
+  }
+
+  &_color_light {
+    background-color: $color-filled-light;
   }
 }
