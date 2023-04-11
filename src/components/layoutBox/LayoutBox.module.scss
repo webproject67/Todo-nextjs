@@ -10,6 +10,10 @@
   }
 
   &_width {
+    &_small {
+      width: 200px;
+    }
+
     &_half {
       @media (min-width: $width-tablet) {
         width: 50%;
@@ -45,7 +49,6 @@
 
   &_marginLeft_auto {
     @media (min-width: $width-tablet) {
-      width: 200px;
       margin-left: auto;
     }
   }

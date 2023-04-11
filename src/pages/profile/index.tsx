@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import LayoutPage from '@/containers/layoutPage';
 import FormProfile from '@/containers/formProfile';
+import LayoutBox from '@/components/layoutBox';
 
 export default function Profile() {
   return (
@@ -9,7 +10,9 @@ export default function Profile() {
         <title>Мой профиль</title>
       </Head>
       <LayoutPage title="Мой профиль">
-        <FormProfile />
+        <LayoutBox padding="small" color="light">
+          <FormProfile />
+        </LayoutBox>
       </LayoutPage>
     </>
   );
