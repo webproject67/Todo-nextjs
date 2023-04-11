@@ -1,5 +1,5 @@
 import type { RootState } from '@/types/store';
-import { ReducerName } from '@/types/const';
+import { ReducerName } from '@/utils/const';
 
 export const selectCount = (state: RootState) =>
   state[ReducerName.Counter].value;
