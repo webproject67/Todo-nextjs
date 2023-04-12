@@ -1,0 +1,17 @@
+@import './variables';
+
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+
+  color: $color-text-light;
+
+  background-color: $color-filled-dark;
+}
+
+.wrapper {
+  text-align: center;
+}
