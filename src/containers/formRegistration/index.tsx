@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@/components/button';
@@ -21,6 +22,8 @@ const validationSchema = yup.object({
 });
 
 export default function FormRegistration() {
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -28,8 +31,16 @@ export default function FormRegistration() {
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      await fetch(`api/user/registration`, {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
+        if (res.ok) router.push('/dashboard');
+      });
     },
   });
 
