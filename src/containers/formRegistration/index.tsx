@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import createHttpError from 'http-errors';
 import Button from '@/components/button';
 import TextField from '@/components/textField';
 import LayoutBox from '@/components/layoutBox';
@@ -22,8 +22,6 @@ const validationSchema = yup.object({
 });
 
 export default function FormRegistration() {
-  const router = useRouter();
-
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -32,15 +30,27 @@ export default function FormRegistration() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await fetch(`api/user/registration`, {
+      const response = await fetch(`api/user/signUp`, {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((res) => {
-        if (res.ok) router.push('/dashboard');
       });
+
+      try {
+        if (response.ok) {
+          console.log('ok');
+          return;
+        }
+
+        if (response.status === 404)
+          throw createHttpError(response.status, response.statusText);
+
+        console.log((await response.json()).message || response.statusText);
+      } catch (e) {
+        console.log('404 Ошибка');
+      }
     },
   });
 
