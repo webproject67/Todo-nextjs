@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@/components/button';
@@ -16,14 +17,34 @@ const validationSchema = yup.object({
 });
 
 export default function FormLogin() {
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      const response = await fetch(`api/user/signIn`, {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        router.push('/');
+        return;
+      }
+
+      if (response.status === 404) {
+        console.log('404 Ошибка');
+        return;
+      }
+
+      console.log((await response.json()).message || response.statusText);
     },
   });
 

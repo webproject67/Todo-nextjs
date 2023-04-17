@@ -9,8 +9,8 @@ export default async function handler(
 ) {
   await dbConnect(res);
 
-  await User.findOne({ email: req.body.email }).then((result) => {
-    if (result)
+  await User.findOne({ email: req.body.email }).then((findUser) => {
+    if (findUser)
       res
         .status(500)
         .json({ message: 'Пользователь с таким email уже зарегистрирован' });
