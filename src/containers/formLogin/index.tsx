@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@/components/button';
@@ -40,11 +41,11 @@ export default function FormLogin() {
       }
 
       if (response.status === 404) {
-        console.log('404 Ошибка');
+        toast.error('404 Ошибка');
         return;
       }
 
-      console.log((await response.json()).message || response.statusText);
+      toast.error((await response.json()).message || response.statusText);
     },
   });
 

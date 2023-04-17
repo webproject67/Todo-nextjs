@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
@@ -21,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <CacheProvider value={cache}>
         <div className={montserrat.className}>
           <Component {...pageProps} />
+          <ToastContainer />
         </div>
       </CacheProvider>
     </Provider>
