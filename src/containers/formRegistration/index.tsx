@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import Button from '@/components/button';
 import TextField from '@/components/textField';
 import LayoutBox from '@/components/layoutBox';
+import { saveToken } from '@/utils/token';
 
 const validationSchema = yup.object({
   email: yup
@@ -42,6 +43,7 @@ export default function FormRegistration() {
       });
 
       if (response.ok) {
+        saveToken((await response.json()).token);
         router.push('/');
         return;
       }

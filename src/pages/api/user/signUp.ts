@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/user';
 
@@ -20,7 +21,10 @@ export default async function handler(
 
   User.create({ email: req.body.email, password: hashPassword })
     .then(() => {
-      res.status(201).json({});
+      const token = jwt.sign(req.body, String(process.env.JWT_SECRET), {
+        expiresIn: '1d',
+      });
+      res.status(201).json({ token });
     })
     .catch(() => {
       res
