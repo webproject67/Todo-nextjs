@@ -4,7 +4,7 @@ import styles from './LayoutBox.module.scss';
 
 type Props = {
   children: React.ReactNode;
-  display?: 'flex';
+  display?: 'flex' | 'center';
   width?: 'small' | 'half' | 'desktop' | 'full';
   height?: 'full' | 'min';
   marginBottom?: 'small';
@@ -27,6 +27,7 @@ function LayoutBox({
     <div
       className={cn(styles.root, {
         [styles.root_display_flex]: display === 'flex',
+        [styles.root_display_center]: display === 'center',
         [styles.root_width_small]: width === 'small',
         [styles.root_width_half]: width === 'half',
         [styles.root_width_desktop]: width === 'desktop',

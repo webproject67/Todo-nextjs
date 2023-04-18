@@ -1,0 +1,7 @@
+@import '@/styles/variables';
+
+.root {
+  &_color_primary {
+    color: $color-filled-primary;
+  }
+}

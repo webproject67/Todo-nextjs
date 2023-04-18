@@ -3,9 +3,16 @@
 .root {
   border-radius: 10px;
 
-  &_display_flex {
-    @media (min-width: $width-tablet) {
-      display: flex;
+  &_display {
+    &_flex {
+      @media (min-width: $width-tablet) {
+        display: flex;
+      }
+    }
+
+    &_center {
+      justify-content: center;
+      align-items: center;
     }
   }
 
