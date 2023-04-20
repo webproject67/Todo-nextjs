@@ -19,9 +19,11 @@ export default async function handler(
 
   const hashPassword = await bcrypt.hash(req.body.password, 15);
 
-  User.create({ email: req.body.email, password: hashPassword })
+  const dataUser = { email: req.body.email, password: hashPassword };
+
+  User.create(dataUser)
     .then(() => {
-      const token = jwt.sign(req.body, String(process.env.JWT_SECRET), {
+      const token = jwt.sign(dataUser, String(process.env.JWT_SECRET), {
         expiresIn: '1d',
       });
       res.status(201).json({ token });

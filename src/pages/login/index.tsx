@@ -1,11 +1,13 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { useAppSelector } from '@/store/hooks';
+import { selectAuthorizationStatus } from '@/store/user/selectors';
 import FormLogin from '@/containers/formLogin';
 import LayoutAuth from '@/components/layoutAuth';
 import LayoutBox from '@/components/layoutBox';
 import Progress from '@/components/progress';
-import { getToken } from '@/utils/token';
+import { AuthorizationStatus } from '@/utils/const';
 
 const route = {
   text: 'Нет аккаунта?',
@@ -15,15 +17,16 @@ const route = {
 export default function Login() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   useEffect(() => {
-    if (getToken()) {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
       router.push('/');
       return;
     }
 
     setLoading(false);
-  }, [router]);
+  }, [authorizationStatus, router]);
 
   if (isLoading) {
     return (

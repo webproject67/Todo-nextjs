@@ -6,6 +6,7 @@ import createCache from '@emotion/cache';
 import type { AppProps } from 'next/app';
 import { Montserrat } from 'next/font/google';
 import store from '@/store';
+import { checkAuthAction } from '@/store/api-actions';
 import '@/styles/globals.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,6 +16,8 @@ const cache = createCache({
   key: 'css',
   prepend: true,
 });
+
+store.dispatch(checkAuthAction());
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

@@ -25,9 +25,13 @@ export default async function handler(
       if (!comparePassword)
         res.status(500).json({ message: 'Неверный пароль' });
 
-      const token = jwt.sign(req.body, String(process.env.JWT_SECRET), {
-        expiresIn: '1d',
-      });
+      const token = jwt.sign(
+        { email: req.body.email, password: findUser.password },
+        String(process.env.JWT_SECRET),
+        {
+          expiresIn: '1d',
+        }
+      );
       res.status(200).json({ token });
     })
     .catch(() => {
