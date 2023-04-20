@@ -4,6 +4,8 @@ import Header from '@/components/header';
 import LayoutBox from '@/components/layoutBox';
 import LayoutMain from '@/components/layoutMain';
 import Drawer from '@/components/drawer';
+import { useAppDispatch } from '@/store/hooks';
+import { logoutAction } from '@/store/api-actions';
 
 type Props = {
   children: React.ReactNode;
@@ -11,6 +13,7 @@ type Props = {
 };
 
 export default function LayoutPage({ children, title }: Props) {
+  const dispatch = useAppDispatch();
   const isMobileWidth = useMediaQuery('(max-width:767px)');
 
   const [isOpenDrawer, setOpenDrawer] = React.useState(false);
@@ -28,6 +31,8 @@ export default function LayoutPage({ children, title }: Props) {
       setOpenDrawer(statusOpenDrawer);
     };
 
+  const logout = () => dispatch(logoutAction());
+
   return (
     <LayoutBox height="full">
       {isMobileWidth && <Header handleToggleDrawer={toggleDrawer} />}
@@ -43,6 +48,7 @@ export default function LayoutPage({ children, title }: Props) {
         isOpenDrawer={isOpenDrawer}
         variant={isMobileWidth ? 'temporary' : 'persistent'}
         handleToggleDrawer={toggleDrawer}
+        handleLogout={logout}
       />
     </LayoutBox>
   );

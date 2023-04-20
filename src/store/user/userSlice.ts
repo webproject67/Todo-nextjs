@@ -1,7 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { signUpAction, signInAction, checkAuthAction } from '../api-actions';
+import {
+  signUpAction,
+  signInAction,
+  checkAuthAction,
+  logoutAction,
+} from '../api-actions';
 import { ReducerName, AuthorizationStatus } from '@/utils/const';
 
 interface UserState {
@@ -72,6 +77,12 @@ export const userSlice = createSlice({
         }
       )
       .addCase(checkAuthAction.rejected, (state) => {
+        state.authorizationStatus = AuthorizationStatus.NoAuth;
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        state.userData = {
+          email: '',
+        };
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       });
   },

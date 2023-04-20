@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { getToken, saveToken } from '@/utils/token';
+import { getToken, saveToken, dropToken } from '@/utils/token';
 
 export const signUpAction = createAsyncThunk<
   {
@@ -85,3 +85,15 @@ export const checkAuthAction = createAsyncThunk<
 
   throw new Error('Не авторизован');
 });
+
+export const logoutAction = createAsyncThunk<void, undefined>(
+  'user/logout',
+  async () => {
+    const response = await fetch(`api/user/logout`, {
+      method: 'DELETE',
+    });
+
+    await response.json();
+    dropToken();
+  }
+);

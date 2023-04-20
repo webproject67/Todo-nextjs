@@ -8,6 +8,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Button from '@mui/material/Button';
+import LogoutIcon from '@mui/icons-material/Logout';
 import styles from './Drawer.module.scss';
 
 type Props = {
@@ -16,6 +18,7 @@ type Props = {
   handleToggleDrawer: (
     statusOpenDrawer: boolean
   ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  handleLogout: () => void;
 };
 
 const routes = [
@@ -35,6 +38,7 @@ function CustomizationDrawer({
   isOpenDrawer,
   variant,
   handleToggleDrawer,
+  handleLogout,
 }: Props) {
   return (
     <Drawer
@@ -66,6 +70,14 @@ function CustomizationDrawer({
               </ListItemButton>
             </ListItem>
           ))}
+          <ListItem disablePadding>
+            <ListItemButton component={Button} onClick={handleLogout}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Выйти" />
+            </ListItemButton>
+          </ListItem>
         </List>
       </div>
     </Drawer>
