@@ -22,6 +22,6 @@ export default async function handler(
     const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as Token;
     res.status(200).json({ email: decoded.email });
   } catch (e) {
-    res.status(401).json({});
+    res.status(401).json({ message: 'Не авторизован' });
   }
 }
