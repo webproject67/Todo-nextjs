@@ -3,7 +3,8 @@ import * as yup from 'yup';
 import Button from '@/components/button';
 import TextField from '@/components/textField';
 import LayoutBox from '@/components/layoutBox';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectLoading } from '@/store/user/selectors';
 import { signUpAction } from '@/store/api-actions';
 
 const validationSchema = yup.object({
@@ -24,6 +25,7 @@ const validationSchema = yup.object({
 
 export default function FormRegistration() {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectLoading);
 
   const formik = useFormik({
     initialValues: {
@@ -77,7 +79,12 @@ export default function FormRegistration() {
             }
           />
         </LayoutBox>
-        <Button text="Зарегистрироваться" color="primary" type="submit" />
+        <Button
+          text="Зарегистрироваться"
+          color="primary"
+          type="submit"
+          isDisabled={isLoading}
+        />
       </form>
     </LayoutBox>
   );

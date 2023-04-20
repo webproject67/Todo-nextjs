@@ -8,6 +8,7 @@ type Props = {
   color?: 'primary';
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
   variant?: 'text' | 'contained' | 'outlined';
+  isDisabled?: boolean;
   handleClick?: () => void;
 };
 
@@ -16,6 +17,7 @@ function CustomizationButton({
   color,
   type,
   variant,
+  isDisabled,
   handleClick,
 }: Props) {
   return (
@@ -26,9 +28,10 @@ function CustomizationButton({
       fullWidth
       type={type}
       variant={variant}
+      disabled={isDisabled}
       onClick={handleClick}
     >
-      {text}
+      {isDisabled ? 'Loading...' : text}
     </Button>
   );
 }
@@ -37,6 +40,7 @@ CustomizationButton.defaultProps = {
   color: '',
   type: 'button',
   variant: 'contained',
+  isDisabled: false,
   handleClick: () => {},
 };
 
