@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@/components/button';
 import TextField from '@/components/textField';
 import LayoutBox from '@/components/layoutBox';
-import { saveToken } from '@/utils/token';
+import { useAppDispatch } from '@/store/hooks';
+import { signUpAction } from '@/store/api-actions';
 
 const validationSchema = yup.object({
   email: yup
@@ -24,7 +23,7 @@ const validationSchema = yup.object({
 });
 
 export default function FormRegistration() {
-  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -34,26 +33,7 @@ export default function FormRegistration() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const response = await fetch(`api/user/signUp`, {
-        method: 'POST',
-        body: JSON.stringify(values),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        saveToken((await response.json()).token);
-        router.push('/');
-        return;
-      }
-
-      if (response.status === 404) {
-        toast.error('404 Ошибка');
-        return;
-      }
-
-      toast.error((await response.json()).message || response.statusText);
+      dispatch(signUpAction(values));
     },
   });
 

@@ -26,7 +26,7 @@ export default async function handler(
       const token = jwt.sign(dataUser, String(process.env.JWT_SECRET), {
         expiresIn: '1d',
       });
-      res.status(201).json({ token });
+      res.status(201).json({ email: req.body.email, token });
     })
     .catch(() => {
       res

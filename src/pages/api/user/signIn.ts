@@ -32,7 +32,7 @@ export default async function handler(
           expiresIn: '1d',
         }
       );
-      res.status(200).json({ token });
+      res.status(200).json({ email: req.body.email, token });
     })
     .catch(() => {
       res
