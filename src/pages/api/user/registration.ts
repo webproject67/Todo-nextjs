@@ -1,14 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/user';
+import getHashPassword from '@/utils/bcrypt';
+import createToken from '@/utils/jwt';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await dbConnect(res);
+  await dbConnect.catch(() => {
+    res
+      .status(500)
+      .json({ message: 'Ошибка выполнения запроса к базе данных' });
+  });
 
   await User.findOne({ email: req.body.email }).then((findUser) => {
     if (findUser)
@@ -17,15 +21,12 @@ export default async function handler(
         .json({ message: 'Пользователь с таким email уже зарегистрирован' });
   });
 
-  const hashPassword = await bcrypt.hash(req.body.password, 15);
-
+  const hashPassword = await getHashPassword(req.body.password);
   const dataUser = { email: req.body.email, password: hashPassword };
+  const token = createToken(dataUser);
 
   User.create(dataUser)
     .then(() => {
-      const token = jwt.sign(dataUser, String(process.env.JWT_SECRET), {
-        expiresIn: '1d',
-      });
       res.status(201).json({ email: req.body.email, token });
     })
     .catch(() => {

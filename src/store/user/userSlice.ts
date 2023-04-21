@@ -2,8 +2,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import {
-  signUpAction,
-  signInAction,
+  registrationAction,
+  loginAction,
   checkAuthAction,
   updateAction,
   logoutAction,
@@ -36,28 +36,28 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(signUpAction.pending, (state) => {
+      .addCase(registrationAction.pending, (state) => {
         state.authorizationStatus = AuthorizationStatus.Unknown;
         state.isLoading = true;
       })
       .addCase(
-        signUpAction.fulfilled,
+        registrationAction.fulfilled,
         (state, action: PayloadAction<{ email: string }>) => {
           state.userData.email = action.payload.email;
           state.authorizationStatus = AuthorizationStatus.Auth;
           state.isLoading = false;
         }
       )
-      .addCase(signUpAction.rejected, (state) => {
+      .addCase(registrationAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.isLoading = false;
       })
-      .addCase(signInAction.pending, (state) => {
+      .addCase(loginAction.pending, (state) => {
         state.authorizationStatus = AuthorizationStatus.Unknown;
         state.isLoading = true;
       })
       .addCase(
-        signInAction.fulfilled,
+        loginAction.fulfilled,
         (
           state,
           action: PayloadAction<{
@@ -66,14 +66,16 @@ export const userSlice = createSlice({
             surname: string;
           }>
         ) => {
-          state.userData.email = action.payload.email;
-          state.userData.name = action.payload.name;
-          state.userData.surname = action.payload.surname;
+          state.userData = {
+            email: action.payload.email,
+            name: action.payload.name,
+            surname: action.payload.surname,
+          };
           state.authorizationStatus = AuthorizationStatus.Auth;
           state.isLoading = false;
         }
       )
-      .addCase(signInAction.rejected, (state) => {
+      .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.isLoading = false;
       })
@@ -87,9 +89,11 @@ export const userSlice = createSlice({
             surname: string;
           }>
         ) => {
-          state.userData.email = action.payload.email;
-          state.userData.name = action.payload.name;
-          state.userData.surname = action.payload.surname;
+          state.userData = {
+            email: action.payload.email,
+            name: action.payload.name,
+            surname: action.payload.surname,
+          };
           state.authorizationStatus = AuthorizationStatus.Auth;
         }
       )
@@ -109,9 +113,11 @@ export const userSlice = createSlice({
             surname: string;
           }>
         ) => {
-          state.userData.email = action.payload.email;
-          state.userData.name = action.payload.name;
-          state.userData.surname = action.payload.surname;
+          state.userData = {
+            email: action.payload.email,
+            name: action.payload.name,
+            surname: action.payload.surname,
+          };
           state.isLoading = false;
         }
       )

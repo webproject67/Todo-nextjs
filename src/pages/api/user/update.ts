@@ -1,43 +1,43 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/user';
+import getHashPassword from '@/utils/bcrypt';
+import createToken from '@/utils/jwt';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await dbConnect(res);
+  await dbConnect.catch(() => {
+    res
+      .status(500)
+      .json({ message: 'Ошибка выполнения запроса к базе данных' });
+  });
 
-  const hashPassword = await bcrypt.hash(req.body.password, 15);
+  const hashPassword = await getHashPassword(req.body.password);
 
-  const token = jwt.sign(
-    {
-      email: req.body.email,
-      password: hashPassword,
-      name: req.body.name,
-      surname: req.body.surname,
-    },
-    String(process.env.JWT_SECRET),
-    {
-      expiresIn: '1d',
-    }
-  );
+  const token = createToken({
+    email: req.body.email,
+    password: hashPassword,
+    name: req.body.name,
+    surname: req.body.surname,
+  });
 
-  try {
-    await User.updateOne(
-      { email: req.body.email },
-      { password: hashPassword, name: req.body.name, surname: req.body.surname }
-    );
-
-    res.status(200).json({
-      email: req.body.email,
-      name: req.body.name,
-      surname: req.body.surname,
-      token,
+  User.updateOne(
+    { email: req.body.email },
+    { password: hashPassword, name: req.body.name, surname: req.body.surname }
+  )
+    .then(() => {
+      res.status(200).json({
+        email: req.body.email,
+        name: req.body.name,
+        surname: req.body.surname,
+        token,
+      });
+    })
+    .catch(() => {
+      res
+        .status(500)
+        .json({ message: 'Не сохранено, повторите попытку позже' });
     });
-  } catch (err) {
-    res.status(500).json({ message: 'Не сохранено, повторите попытку позже' });
-  }
 }

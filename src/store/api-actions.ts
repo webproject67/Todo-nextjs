@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { getToken, saveToken, dropToken } from '@/utils/token';
 
-export const signUpAction = createAsyncThunk<
+export const registrationAction = createAsyncThunk<
   {
     email: string;
     token: string;
@@ -12,8 +12,8 @@ export const signUpAction = createAsyncThunk<
     password: string;
     confirmPassword: string;
   }
->('user/signUp', async (values) => {
-  const response = await fetch(`api/user/signUp`, {
+>('user/registration', async (values) => {
+  const response = await fetch(`api/user/registration`, {
     method: 'POST',
     body: JSON.stringify(values),
     headers: {
@@ -34,7 +34,7 @@ export const signUpAction = createAsyncThunk<
   throw new Error('Не авторизован');
 });
 
-export const signInAction = createAsyncThunk<
+export const loginAction = createAsyncThunk<
   {
     email: string;
     name: string;
@@ -45,8 +45,8 @@ export const signInAction = createAsyncThunk<
     email: string;
     password: string;
   }
->('user/signIn', async (values) => {
-  const response = await fetch(`api/user/signIn`, {
+>('user/login', async (values) => {
+  const response = await fetch(`api/user/login`, {
     method: 'POST',
     body: JSON.stringify(values),
     headers: {
@@ -105,7 +105,7 @@ export const updateAction = createAsyncThunk<
   }
 >('user/update', async (values) => {
   const response = await fetch(`api/user/update`, {
-    method: 'POST',
+    method: 'PUT',
     body: JSON.stringify(values),
     headers: {
       'Content-Type': 'application/json',

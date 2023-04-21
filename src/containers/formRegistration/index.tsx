@@ -5,7 +5,7 @@ import TextField from '@/components/textField';
 import LayoutBox from '@/components/layoutBox';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectLoading } from '@/store/user/selectors';
-import { signUpAction } from '@/store/api-actions';
+import { registrationAction } from '@/store/api-actions';
 
 const validationSchema = yup.object({
   email: yup
@@ -35,7 +35,7 @@ export default function FormRegistration() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      dispatch(signUpAction(values));
+      dispatch(registrationAction(values));
     },
   });
 

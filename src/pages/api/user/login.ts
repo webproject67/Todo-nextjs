@@ -1,14 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/user';
+import createToken from '@/utils/jwt';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await dbConnect(res);
+  await dbConnect.catch(() => {
+    res
+      .status(500)
+      .json({ message: 'Ошибка выполнения запроса к базе данных' });
+  });
 
   User.findOne({ email: req.body.email })
     .then((findUser) => {
@@ -25,15 +29,13 @@ export default async function handler(
       if (!comparePassword)
         res.status(500).json({ message: 'Неверный пароль' });
 
-      const token = jwt.sign(
-        { email: req.body.email, password: findUser.password },
-        String(process.env.JWT_SECRET),
-        {
-          expiresIn: '1d',
-        }
-      );
+      const token = createToken({
+        email: findUser.email,
+        password: findUser.password,
+      });
+
       res.status(200).json({
-        email: req.body.email,
+        email: findUser.email,
         name: findUser.name,
         surname: findUser.surname,
         token,
