@@ -32,7 +32,12 @@ export default async function handler(
           expiresIn: '1d',
         }
       );
-      res.status(200).json({ email: req.body.email, token });
+      res.status(200).json({
+        email: req.body.email,
+        name: findUser.name,
+        surname: findUser.surname,
+        token,
+      });
     })
     .catch(() => {
       res

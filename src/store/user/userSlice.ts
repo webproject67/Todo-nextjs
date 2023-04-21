@@ -5,6 +5,7 @@ import {
   signUpAction,
   signInAction,
   checkAuthAction,
+  updateAction,
   logoutAction,
 } from '../api-actions';
 import { ReducerName, AuthorizationStatus } from '@/utils/const';
@@ -12,6 +13,8 @@ import { ReducerName, AuthorizationStatus } from '@/utils/const';
 interface UserState {
   userData: {
     email: string;
+    name: string;
+    surname: string;
   };
   authorizationStatus: AuthorizationStatus;
   isLoading: boolean;
@@ -20,6 +23,8 @@ interface UserState {
 const initialState: UserState = {
   userData: {
     email: '',
+    name: '',
+    surname: '',
   },
   authorizationStatus: AuthorizationStatus.Unknown,
   isLoading: false,
@@ -38,9 +43,7 @@ export const userSlice = createSlice({
       .addCase(
         signUpAction.fulfilled,
         (state, action: PayloadAction<{ email: string }>) => {
-          state.userData = {
-            email: action.payload.email,
-          };
+          state.userData.email = action.payload.email;
           state.authorizationStatus = AuthorizationStatus.Auth;
           state.isLoading = false;
         }
@@ -55,10 +58,17 @@ export const userSlice = createSlice({
       })
       .addCase(
         signInAction.fulfilled,
-        (state, action: PayloadAction<{ email: string }>) => {
-          state.userData = {
-            email: action.payload.email,
-          };
+        (
+          state,
+          action: PayloadAction<{
+            email: string;
+            name: string;
+            surname: string;
+          }>
+        ) => {
+          state.userData.email = action.payload.email;
+          state.userData.name = action.payload.name;
+          state.userData.surname = action.payload.surname;
           state.authorizationStatus = AuthorizationStatus.Auth;
           state.isLoading = false;
         }
@@ -69,19 +79,50 @@ export const userSlice = createSlice({
       })
       .addCase(
         checkAuthAction.fulfilled,
-        (state, action: PayloadAction<{ email: string }>) => {
-          state.userData = {
-            email: action.payload.email,
-          };
+        (
+          state,
+          action: PayloadAction<{
+            email: string;
+            name: string;
+            surname: string;
+          }>
+        ) => {
+          state.userData.email = action.payload.email;
+          state.userData.name = action.payload.name;
+          state.userData.surname = action.payload.surname;
           state.authorizationStatus = AuthorizationStatus.Auth;
         }
       )
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
+      .addCase(updateAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        updateAction.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            email: string;
+            name: string;
+            surname: string;
+          }>
+        ) => {
+          state.userData.email = action.payload.email;
+          state.userData.name = action.payload.name;
+          state.userData.surname = action.payload.surname;
+          state.isLoading = false;
+        }
+      )
+      .addCase(updateAction.rejected, (state) => {
+        state.isLoading = false;
+      })
       .addCase(logoutAction.fulfilled, (state) => {
         state.userData = {
           email: '',
+          name: '',
+          surname: '',
         };
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       });

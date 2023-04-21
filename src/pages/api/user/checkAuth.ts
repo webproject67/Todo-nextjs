@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 
 type Token = {
   email: string;
-  password: string;
+  name: string;
+  surname: string;
   iat: number;
   exp: number;
 };
@@ -20,7 +21,11 @@ export default async function handler(
     if (!token) throw new Error('Не авторизован');
 
     const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as Token;
-    res.status(200).json({ email: decoded.email });
+    res.status(200).json({
+      email: decoded.email,
+      name: decoded.name,
+      surname: decoded.surname,
+    });
   } catch (e) {
     res.status(401).json({ message: 'Не авторизован' });
   }

@@ -1,12 +1,13 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectUserData, selectLoading } from '@/store/user/selectors';
+import { updateAction } from '@/store/api-actions';
 import LayoutBox from '@/components/layoutBox';
 import TextField from '@/components/textField';
 import Button from '@/components/button';
 
 const validationSchema = yup.object({
-  name: yup.string().required('Заполните это поле'),
-  surname: yup.string().required('Заполните это поле'),
   password: yup
     .string()
     .min(8, 'Длина пароля должна составлять не менее 8 символов')
@@ -14,16 +15,20 @@ const validationSchema = yup.object({
 });
 
 export default function FormProfile() {
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectLoading);
+  const userData = useAppSelector(selectUserData);
+
   const formik = useFormik({
     initialValues: {
-      name: '',
-      surname: '',
+      name: userData.name,
+      surname: userData.surname,
       password: '',
-      email: '',
+      email: userData.email,
     },
     validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      dispatch(updateAction(values));
     },
   });
 
@@ -83,7 +88,12 @@ export default function FormProfile() {
         </LayoutBox>
       </LayoutBox>
       <LayoutBox width="small" marginLeft="auto">
-        <Button text="Сохранить" color="primary" type="submit" />
+        <Button
+          text="Сохранить"
+          color="primary"
+          type="submit"
+          isDisabled={isLoading}
+        />
       </LayoutBox>
     </form>
   );
