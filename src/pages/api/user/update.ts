@@ -8,30 +8,29 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { email, password, name, surname } = req.body;
+
   await dbConnect.catch(() => {
     res
       .status(500)
       .json({ message: 'Ошибка выполнения запроса к базе данных' });
   });
 
-  const hashPassword = await getHashPassword(req.body.password);
+  const hashPassword = await getHashPassword(password);
 
   const token = createToken({
-    email: req.body.email,
+    email,
     password: hashPassword,
-    name: req.body.name,
-    surname: req.body.surname,
+    name,
+    surname,
   });
 
-  User.updateOne(
-    { email: req.body.email },
-    { password: hashPassword, name: req.body.name, surname: req.body.surname }
-  )
+  User.updateOne({ email }, { password: hashPassword, name, surname })
     .then(() => {
       res.status(200).json({
-        email: req.body.email,
-        name: req.body.name,
-        surname: req.body.surname,
+        email,
+        name,
+        surname,
         token,
       });
     })

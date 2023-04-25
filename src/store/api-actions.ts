@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { getToken, saveToken, dropToken } from '@/utils/token';
+import { OutputChanges, OutputTask } from '@/types/task';
 
 export const registrationAction = createAsyncThunk<
   {
@@ -135,5 +136,98 @@ export const logoutAction = createAsyncThunk<void, undefined>(
 
     await response.json();
     dropToken();
+  }
+);
+
+export const getTasksAction = createAsyncThunk<
+  OutputTask[],
+  {
+    user: string;
+  }
+>('task/getAll', async (values) => {
+  const response = await fetch(`api/task/getAll`, {
+    method: 'POST',
+    body: JSON.stringify(values),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status === 404) toast.error('404 Ошибка');
+
+  const json = await response.json();
+
+  if (response.ok) return json;
+
+  toast.error(json.message || response.statusText);
+  throw new Error('Не удалось добавить');
+});
+
+export const addTaskAction = createAsyncThunk<
+  OutputTask,
+  {
+    text: string;
+    user: string;
+  }
+>('task/create', async (values) => {
+  const response = await fetch(`api/task/create`, {
+    method: 'POST',
+    body: JSON.stringify(values),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status === 404) toast.error('404 Ошибка');
+
+  const json = await response.json();
+
+  if (response.ok) return json;
+
+  toast.error(json.message || response.statusText);
+  throw new Error('Не удалось добавить');
+});
+
+export const updateTaskAction = createAsyncThunk<
+  OutputChanges,
+  { id: string; changes: { isClosed?: boolean; priority?: string } }
+>('task/update', async (values) => {
+  const response = await fetch(`api/task/update`, {
+    method: 'PUT',
+    body: JSON.stringify(values),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (response.status === 404) toast.error('404 Ошибка');
+
+  const json = await response.json();
+
+  if (response.ok) return json;
+
+  toast.error(json.message || response.statusText);
+  throw new Error('Не удалось обновить');
+});
+
+export const deleteTaskAction = createAsyncThunk<string, string>(
+  'task/delete',
+  async (values) => {
+    const response = await fetch(`api/task/delete`, {
+      method: 'DELETE',
+      body: JSON.stringify(values),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 404) toast.error('404 Ошибка');
+
+    const json = await response.json();
+
+    if (response.ok) return json;
+
+    toast.error(json.message || response.statusText);
+    throw new Error('Не удалось удалить');
   }
 );

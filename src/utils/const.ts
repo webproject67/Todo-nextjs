@@ -3,6 +3,7 @@ export const TOKEN_NAME = 'token-todo';
 export enum ReducerName {
   Counter = 'COUNTER',
   User = 'USER',
+  Task = 'TASK',
 }
 
 export enum AuthorizationStatus {

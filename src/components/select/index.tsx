@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import styles from './Select.module.scss';
 
@@ -17,7 +17,7 @@ type Props = {
   }[];
   size?: 'small';
   width?: 'small';
-  handleChange: () => void;
+  handleChange: (event: SelectChangeEvent) => void;
 };
 
 function CustomizationSelect({

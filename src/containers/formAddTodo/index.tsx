@@ -3,19 +3,33 @@ import * as yup from 'yup';
 import LayoutBox from '@/components/layoutBox';
 import TextField from '@/components/textField';
 import Button from '@/components/button';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectUserData } from '@/store/user/selectors';
+import { selectLoading } from '@/store/task/selectors';
+import { addTaskAction } from '@/store/api-actions';
 
 const validationSchema = yup.object({
   text: yup.string().required('Заполните это поле'),
 });
 
 export default function FormAddTodo() {
+  const dispatch = useAppDispatch();
+  const userData = useAppSelector(selectUserData);
+  const isLoading = useAppSelector(selectLoading);
+
   const formik = useFormik({
     initialValues: {
       text: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values, helpers) => {
+      dispatch(
+        addTaskAction({
+          text: values.text,
+          user: userData.email,
+        })
+      );
+      helpers.resetForm();
     },
   });
 
@@ -33,7 +47,12 @@ export default function FormAddTodo() {
         />
       </LayoutBox>
       <LayoutBox width="small">
-        <Button text="Добавить" color="primary" type="submit" />
+        <Button
+          text="Добавить"
+          color="primary"
+          type="submit"
+          isDisabled={isLoading}
+        />
       </LayoutBox>
     </form>
   );
