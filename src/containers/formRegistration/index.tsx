@@ -1,3 +1,4 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@/components/button';
@@ -23,7 +24,7 @@ const validationSchema = yup.object({
     .required('Заполните это поле'),
 });
 
-export default function FormRegistration() {
+function FormRegistration() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectLoading);
 
@@ -89,3 +90,5 @@ export default function FormRegistration() {
     </LayoutBox>
   );
 }
+
+export default React.memo(FormRegistration);

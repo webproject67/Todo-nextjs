@@ -12,7 +12,7 @@ type Props = {
   title: string;
 };
 
-export default function LayoutPage({ children, title }: Props) {
+function LayoutPage({ children, title }: Props) {
   const dispatch = useAppDispatch();
   const isMobileWidth = useMediaQuery('(max-width:767px)');
 
@@ -53,3 +53,5 @@ export default function LayoutPage({ children, title }: Props) {
     </LayoutBox>
   );
 }
+
+export default React.memo(LayoutPage);

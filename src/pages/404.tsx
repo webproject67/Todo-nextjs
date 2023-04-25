@@ -1,9 +1,10 @@
+import React from 'react';
 import Head from 'next/head';
 import cn from 'classnames';
 import Link from '@/components/link';
 import styles from '@/styles/404.module.scss';
 
-export default function Custom404() {
+function Custom404() {
   return (
     <>
       <Head>
@@ -27,3 +28,5 @@ export default function Custom404() {
     </>
   );
 }
+
+export default React.memo(Custom404);

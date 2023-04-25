@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
   selectUserData,
@@ -20,7 +20,7 @@ import Progress from '@/components/progress';
 import { AuthorizationStatus } from '@/utils/const';
 import { SelectPriority } from '@/types/task';
 
-export default function Home() {
+function Home() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
@@ -83,3 +83,5 @@ export default function Home() {
     </>
   );
 }
+
+export default React.memo(Home);

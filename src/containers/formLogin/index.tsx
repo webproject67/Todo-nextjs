@@ -1,3 +1,4 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@/components/button';
@@ -18,7 +19,7 @@ const validationSchema = yup.object({
     .required('Заполните это поле'),
 });
 
-export default function FormLogin() {
+function FormLogin() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectLoading);
 
@@ -67,3 +68,5 @@ export default function FormLogin() {
     </LayoutBox>
   );
 }
+
+export default React.memo(FormLogin);

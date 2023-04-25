@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector } from '@/store/hooks';
 import { selectAuthorizationStatus } from '@/store/user/selectors';
 import FormRegistration from '@/containers/formRegistration';
@@ -14,7 +14,7 @@ const route = {
   href: '/login',
 };
 
-export default function Registration() {
+function Registration() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
@@ -47,3 +47,5 @@ export default function Registration() {
     </>
   );
 }
+
+export default React.memo(Registration);

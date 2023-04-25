@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppSelector } from '@/store/hooks';
 import { selectAuthorizationStatus } from '@/store/user/selectors';
 import LayoutPage from '@/containers/layoutPage';
@@ -9,7 +9,7 @@ import LayoutBox from '@/components/layoutBox';
 import Progress from '@/components/progress';
 import { AuthorizationStatus } from '@/utils/const';
 
-export default function Profile() {
+function Profile() {
   const router = useRouter();
   const [isLoading, setLoading] = useState(true);
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
@@ -44,3 +44,5 @@ export default function Profile() {
     </>
   );
 }
+
+export default React.memo(Profile);

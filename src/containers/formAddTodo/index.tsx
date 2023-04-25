@@ -1,3 +1,4 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import LayoutBox from '@/components/layoutBox';
@@ -12,7 +13,7 @@ const validationSchema = yup.object({
   text: yup.string().required('Заполните это поле'),
 });
 
-export default function FormAddTodo() {
+function FormAddTodo() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(selectUserData);
   const isLoading = useAppSelector(selectLoading);
@@ -57,3 +58,5 @@ export default function FormAddTodo() {
     </form>
   );
 }
+
+export default React.memo(FormAddTodo);

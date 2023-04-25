@@ -1,3 +1,4 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -14,7 +15,7 @@ const validationSchema = yup.object({
     .required('Заполните это поле'),
 });
 
-export default function FormProfile() {
+function FormProfile() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectLoading);
   const userData = useAppSelector(selectUserData);
@@ -98,3 +99,5 @@ export default function FormProfile() {
     </form>
   );
 }
+
+export default React.memo(FormProfile);
