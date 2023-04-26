@@ -1,3 +1,5 @@
+export const DEVELOPMENT = 'development';
+
 export const TOKEN_NAME = 'token-todo';
 
 export enum ReducerName {
