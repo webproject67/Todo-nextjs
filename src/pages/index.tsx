@@ -51,9 +51,11 @@ function Home() {
       router.push('/login');
       return;
     }
-    dispatch(getTasksAction({ user: userData.email }));
 
-    setLoading(false);
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(getTasksAction({ user: userData.email }));
+      setLoading(false);
+    }
   }, [authorizationStatus, dispatch, router, userData.email]);
 
   if (isLoading) {

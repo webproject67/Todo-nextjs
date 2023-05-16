@@ -25,7 +25,7 @@ function Login() {
       return;
     }
 
-    setLoading(false);
+    if (authorizationStatus === AuthorizationStatus.NoAuth) setLoading(false);
   }, [authorizationStatus, router]);
 
   if (isLoading) {

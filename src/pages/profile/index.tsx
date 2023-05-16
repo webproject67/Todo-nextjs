@@ -20,7 +20,7 @@ function Profile() {
       return;
     }
 
-    setLoading(false);
+    if (authorizationStatus === AuthorizationStatus.Auth) setLoading(false);
   }, [authorizationStatus, router]);
 
   if (isLoading) {
