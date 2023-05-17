@@ -19,21 +19,21 @@ export default async function handler(
   User.findOne({ email })
     .then((findUser) => {
       if (!findUser) {
-        res
+        return res
           .status(500)
           .json({ message: 'Пользователь с таким email не найден' });
       }
 
       const comparePassword = bcrypt.compareSync(password, findUser.password);
       if (!comparePassword)
-        res.status(500).json({ message: 'Неверный пароль' });
+        return res.status(500).json({ message: 'Неверный пароль' });
 
       const token = createToken({
         email: findUser.email,
         password: findUser.password,
       });
 
-      res.status(200).json({
+      return res.status(200).json({
         email: findUser.email,
         name: findUser.name,
         surname: findUser.surname,
