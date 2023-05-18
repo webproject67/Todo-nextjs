@@ -29,6 +29,8 @@ export default async function handler(
       const token = createToken({
         email: findUser.email,
         password: findUser.password,
+        name: findUser.name,
+        surname: findUser.surname,
       });
 
       return res.status(200).json({
