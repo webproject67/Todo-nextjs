@@ -8,11 +8,9 @@ export default async function handler(
 ) {
   const { id, changes } = req.body;
 
-  await dbConnect.catch(() => {
-    res
-      .status(500)
-      .json({ message: 'Ошибка выполнения запроса к базе данных' });
-  });
+  await dbConnect.catch(() =>
+    res.status(500).json({ message: 'Ошибка выполнения запроса к базе данных' })
+  );
 
   const newChanges = { ...changes, ...{ updatedAt: new Date() } };
 

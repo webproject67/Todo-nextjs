@@ -8,11 +8,9 @@ export default async function handler(
 ) {
   const { text, user } = req.body;
 
-  await dbConnect.catch(() => {
-    res
-      .status(500)
-      .json({ message: 'Ошибка выполнения запроса к базе данных' });
-  });
+  await dbConnect.catch(() =>
+    res.status(500).json({ message: 'Ошибка выполнения запроса к базе данных' })
+  );
 
   await Task.create({ text, user })
     .then((createTask) => {

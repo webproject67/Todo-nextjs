@@ -10,11 +10,9 @@ export default async function handler(
 ) {
   const { email, password, name, surname } = req.body;
 
-  await dbConnect.catch(() => {
-    res
-      .status(500)
-      .json({ message: 'Ошибка выполнения запроса к базе данных' });
-  });
+  await dbConnect.catch(() =>
+    res.status(500).json({ message: 'Ошибка выполнения запроса к базе данных' })
+  );
 
   const hashPassword = await getHashPassword(password);
 
