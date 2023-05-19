@@ -15,9 +15,7 @@ import styles from './Drawer.module.scss';
 type Props = {
   isOpenDrawer: boolean;
   variant?: 'persistent' | 'temporary';
-  handleToggleDrawer: (
-    statusOpenDrawer: boolean
-  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  handleToggleDrawer: (statusOpenDrawer: boolean) => void;
   handleLogout: () => void;
 };
 
@@ -46,40 +44,34 @@ function CustomizationDrawer({
       anchor="left"
       open={isOpenDrawer}
       variant={variant}
-      onClose={handleToggleDrawer(false)}
+      onClose={() => handleToggleDrawer(false)}
     >
       <Image src="/images/svg/logo.svg" alt="logo" width={172} height={64} />
-      <div
-        role="presentation"
-        onClick={handleToggleDrawer(false)}
-        onKeyDown={handleToggleDrawer(false)}
-      >
-        <List>
-          {routes.map(({ text, href, icon }) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton component={NextLink} href={href}>
-                <ListItemIcon>
-                  <Image
-                    src={`/images/svg/${icon}.svg`}
-                    alt="icon"
-                    width={20}
-                    height={20}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-          <ListItem disablePadding>
-            <ListItemButton component={Button} onClick={handleLogout}>
+      <List>
+        {routes.map(({ text, href, icon }) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton component={NextLink} href={href}>
               <ListItemIcon>
-                <LogoutIcon />
+                <Image
+                  src={`/images/svg/${icon}.svg`}
+                  alt="icon"
+                  width={20}
+                  height={20}
+                />
               </ListItemIcon>
-              <ListItemText primary="Выйти" />
+              <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
-        </List>
-      </div>
+        ))}
+        <ListItem disablePadding>
+          <ListItemButton component={Button} onClick={handleLogout}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Выйти" />
+          </ListItemButton>
+        </ListItem>
+      </List>
     </Drawer>
   );
 }

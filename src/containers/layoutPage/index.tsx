@@ -4,7 +4,9 @@ import Header from '@/components/header';
 import LayoutBox from '@/components/layoutBox';
 import LayoutMain from '@/components/layoutMain';
 import Drawer from '@/components/drawer';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import selectLoadingOpenDrawer from '@/store/drawer/selectors';
+import { setOpenDrawer } from '@/store/drawer/drawerSlice';
 import { logoutAction } from '@/store/api-actions';
 
 type Props = {
@@ -14,24 +16,20 @@ type Props = {
 
 function LayoutPage({ children, title }: Props) {
   const dispatch = useAppDispatch();
+  const isOpenDrawer = useAppSelector(selectLoadingOpenDrawer);
   const isMobileWidth = useMediaQuery('(max-width:767px)');
 
-  const [isOpenDrawer, setOpenDrawer] = React.useState(false);
+  const [isFirstRender, setFirstRender] = React.useState(true);
 
-  const toggleDrawer =
-    (statusOpenDrawer: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      )
-        return;
-
-      setOpenDrawer(statusOpenDrawer);
-    };
+  const toggleDrawer = (statusOpenDrawer: boolean) =>
+    dispatch(setOpenDrawer(statusOpenDrawer));
 
   const logout = () => dispatch(logoutAction());
+
+  if (isFirstRender && isMobileWidth) {
+    dispatch(setOpenDrawer(false));
+    setFirstRender(false);
+  }
 
   return (
     <LayoutBox height="full">

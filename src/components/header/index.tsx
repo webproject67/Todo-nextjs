@@ -7,9 +7,7 @@ import ButtonIcon from '../buttonIcon';
 import styles from './Header.module.scss';
 
 type Props = {
-  handleToggleDrawer: (
-    statusOpenDrawer: boolean
-  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  handleToggleDrawer: (statusOpenDrawer: boolean) => void;
 };
 
 function Header({ handleToggleDrawer }: Props) {
@@ -20,7 +18,7 @@ function Header({ handleToggleDrawer }: Props) {
           <ButtonIcon
             ariaLabel="menu"
             position="absolute"
-            handleClick={handleToggleDrawer(true)}
+            handleClick={() => handleToggleDrawer(true)}
           >
             <MenuIcon />
           </ButtonIcon>

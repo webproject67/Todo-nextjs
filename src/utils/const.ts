@@ -3,7 +3,7 @@ export const DEVELOPMENT = 'development';
 export const TOKEN_NAME = 'token-todo';
 
 export enum ReducerName {
-  Counter = 'COUNTER',
+  Drawer = 'DRAWER',
   User = 'USER',
   Task = 'TASK',
 }

@@ -10,9 +10,7 @@ type Props = {
   title: string;
   isMobileWidth: boolean;
   isOpenDrawer: boolean;
-  handleToggleDrawer: (
-    statusOpenDrawer: boolean
-  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+  handleToggleDrawer: (statusOpenDrawer: boolean) => void;
 };
 
 function LayoutMain({
@@ -34,7 +32,7 @@ function LayoutMain({
             ariaLabel="toggle"
             filled="light"
             isRotated={isOpenDrawer}
-            handleClick={handleToggleDrawer(!isOpenDrawer)}
+            handleClick={() => handleToggleDrawer(!isOpenDrawer)}
           >
             <ArrowForwardIosIcon />
           </ButtonIcon>
