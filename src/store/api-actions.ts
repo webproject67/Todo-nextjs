@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { getToken, saveToken, dropToken } from '@/utils/token';
 import { OutputChanges, OutputTask } from '@/types/task';
+import { AppDispatch } from '@/types/store';
+import { removeAllTasks } from './task/taskSlice';
 
 export const registrationAction = createAsyncThunk<
   {
@@ -127,17 +129,21 @@ export const updateAction = createAsyncThunk<
   throw new Error('Не авторизован');
 });
 
-export const logoutAction = createAsyncThunk<void, undefined>(
-  'user/logout',
-  async () => {
-    const response = await fetch(`api/user/logout`, {
-      method: 'DELETE',
-    });
-
-    await response.json();
-    dropToken();
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
   }
-);
+>('user/logout', async (_arg, { dispatch }) => {
+  const response = await fetch(`api/user/logout`, {
+    method: 'DELETE',
+  });
+
+  await response.json();
+  dropToken();
+  dispatch(removeAllTasks());
+});
 
 export const getTasksAction = createAsyncThunk<
   OutputTask[],

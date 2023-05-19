@@ -23,7 +23,11 @@ const tasksAdapter = createEntityAdapter<OutputTask>({
 export const taskSlice = createSlice({
   name: ReducerName.Task,
   initialState: tasksAdapter.getInitialState({ isLoading: false }),
-  reducers: {},
+  reducers: {
+    removeAllTasks: (state) => {
+      tasksAdapter.removeAll(state);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getTasksAction.pending, (state) => {
@@ -66,5 +70,7 @@ export const taskSlice = createSlice({
       );
   },
 });
+
+export const { removeAllTasks } = taskSlice.actions;
 
 export default taskSlice.reducer;

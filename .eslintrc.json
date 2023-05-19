@@ -10,6 +10,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "import/no-cycle": ["off"],
     "import/extensions": [
       "error",
       "ignorePackages",
