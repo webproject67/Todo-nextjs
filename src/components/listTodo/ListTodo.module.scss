@@ -28,6 +28,10 @@
 
 .task {
   margin-top: 0;
+
+  &_td_lineThrough {
+    text-decoration: line-through;
+  }
 }
 
 .date {

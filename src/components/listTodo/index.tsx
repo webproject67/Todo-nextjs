@@ -46,7 +46,12 @@ function ListTodo({ tasks, handleSelect, handleClose, handleDelete }: Props) {
               key={tasks.tasksEntities[data]!._id}
             >
               <div className={cn(styles.texts)}>
-                <p className={cn(styles.task)}>
+                <p
+                  className={cn(styles.task, {
+                    [styles.task_td_lineThrough]:
+                      tasks.tasksEntities[data]!.isClosed,
+                  })}
+                >
                   {i + 1}. {tasks.tasksEntities[data]!.text}
                 </p>
                 <p className={cn(styles.date)}>
