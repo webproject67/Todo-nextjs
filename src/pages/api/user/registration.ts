@@ -20,7 +20,7 @@ export default async function handler(
 
   await User.findOne({ email }).then((findUser) => {
     if (findUser) {
-      if (authGoogle) res.status(200).json({ email, token });
+      if (authGoogle) return res.status(200).json({ email, token });
       return res
         .status(500)
         .json({ message: 'Пользователь с таким email уже зарегистрирован' });
