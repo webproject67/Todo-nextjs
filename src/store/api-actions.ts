@@ -13,7 +13,8 @@ export const registrationAction = createAsyncThunk<
   {
     email: string;
     password: string;
-    confirmPassword: string;
+    confirmPassword?: string;
+    authGoogle?: boolean;
   }
 >('user/registration', async (values) => {
   const response = await fetch(`api/user/registration`, {

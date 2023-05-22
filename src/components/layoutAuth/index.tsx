@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import cn from 'classnames';
+import AuthGoogle from '@/containers/authGoogle';
 import Link from '@/components/link';
 import styles from './LayoutAuth.module.scss';
 
@@ -24,6 +25,7 @@ function LayoutAuth({ children, route }: Props) {
       />
       {children}
       <Link text={route.text} href={route.href} />
+      <AuthGoogle />
     </main>
   );
 }
