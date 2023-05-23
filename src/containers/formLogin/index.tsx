@@ -41,7 +41,7 @@ function FormLogin() {
           <TextField
             id="email"
             label="Логин"
-            value={formik.values.email}
+            value={formik.values.email.toLowerCase()}
             handleChange={formik.handleChange}
             isError={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
