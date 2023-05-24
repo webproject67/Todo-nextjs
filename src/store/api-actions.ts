@@ -8,6 +8,8 @@ import { removeAllTasks } from './task/taskSlice';
 export const registrationAction = createAsyncThunk<
   {
     email: string;
+    name: string;
+    surname: string;
     token: string;
   },
   {

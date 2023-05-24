@@ -42,8 +42,19 @@ export const userSlice = createSlice({
       })
       .addCase(
         registrationAction.fulfilled,
-        (state, action: PayloadAction<{ email: string }>) => {
-          state.userData.email = action.payload.email;
+        (
+          state,
+          action: PayloadAction<{
+            email: string;
+            name: string;
+            surname: string;
+          }>
+        ) => {
+          state.userData = {
+            email: action.payload.email,
+            name: action.payload.name,
+            surname: action.payload.surname,
+          };
           state.authorizationStatus = AuthorizationStatus.Auth;
           state.isLoading = false;
         }
